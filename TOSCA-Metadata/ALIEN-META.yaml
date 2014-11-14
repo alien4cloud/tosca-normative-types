@@ -1,9 +1,0 @@
-# This archive contains normative types.
-name: "tosca-normative-types"
-version: "1.0.0-wd02-SNAPSHOT"
-license: "Apache v2.0"
-created_by: "FastConnect"
-
-# List of definitions file in the archive.
-definitions:
-    - /normative-types.yml
