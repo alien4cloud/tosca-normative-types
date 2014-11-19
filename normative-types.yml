@@ -266,10 +266,6 @@ capability_types:
       url_path:
         type: string
         required: false
-    attributes:
-      ip_address:
-        type: string
-
   tosca.capabilities.DatabaseEndpoint:
     derived_from: tosca.capabilities.Endpoint
     description: This is the default TOSCA type that should be used or extended to define a specialized database endpoint capability.
