@@ -15,28 +15,35 @@ node_types:
       (e.g, consistent definitions for requirements, capabilities, and lifecycle interfaces).
     tags:
       icon: /images/root.png
+    attributes:
+      tosca_id:
+        type: string
+      tosca_name:
+        type: string
     requirements:
       dependency:
         type: tosca.capabilities.Root
         lower_bound: 0
         upper_bound: unbounded
     capabilities:
-      self:
+      root:
         type: tosca.capabilities.Root
     interfaces:
-      lifecycle:
-        description: Default lifecycle for nodes in TOSCA.
-        operations:
-          create:
-            description: Basic lifecycle create operation.
-          configure:
-            description: Basic lifecycle configure operation.
-          start:
-            description: Basic lifecycle start operation.
-          stop:
-            description: Basic lifecycle stop operation.
-          delete:
-            description: Basic lifecycle delete operation.
+      tosca.interfaces.node.lifecycle.Standard:
+        description: >
+          This lifecycle interface defines the essential, normative operations that TOSCA nodes may support.
+        create:
+          description: Standard lifecycle create operation.
+        configure:
+          description: Standard lifecycle configure operation (pre-start).
+        start:
+          description: Standard lifecycle start operation.
+        post_start:
+          description: Standard lifecycle post-configure operation (post-start)
+        stop:
+          description: Standard lifecycle stop operation.
+        delete:
+          description: Standard lifecycle delete operation.
 
   # Infrastructure components
   tosca.nodes.Compute:
@@ -94,8 +101,8 @@ node_types:
         type: tosca.capabilities.Container
         properties:
           valid_node_types: [tosca.nodes.SoftwareComponent]
-      attach:
-        type: tosca.capabilities.Attachment
+      attach: tosca.capabilities.Attachment
+      scalable: tosca.capabilities.Scalable
 
   tosca.nodes.BlockStorage:
     derived_from: tosca.nodes.Root
@@ -119,7 +126,7 @@ node_types:
     attributes:
       volume_id:
         type: string
-        description: ID provided  by the orchestrator for newly created volumes.
+        description: ID provided by the orchestrator for newly created volumes.
     requirements:
       attachment:
         type: tosca.capabilities.Attachment
@@ -155,9 +162,8 @@ node_types:
       The TOSCA SoftwareComponent Node Type represents a generic software component
       that can be managed and run by a TOSCA Compute Node Type.
     requirements:
-      host:
-        type: tosca.nodes.Compute
-        relationship_type: tosca.relationships.HostedOn
+      - host: tosca.nodes.Compute
+        type: tosca.relationships.HostedOn
     tags:
       icon: /images/software.png
 
@@ -167,10 +173,8 @@ node_types:
     description: >
       The TOSCA WebServer Node Type represents an abstract software component or service that is capable of hosting and providing management operations for one or more WebApplication nodes
     capabilities:
-      http_endpoint:
-        type: tosca.capabilities.Endpoint
-      https_endpoint:
-        type: tosca.capabilities.Endpoint
+      app_endpoint: tosca.capabilities.Endpoint
+      secure_endpoint: tosca.capabilities.Endpoint
       host:
         type: tosca.capabilities.Container
         properties:
@@ -183,9 +187,8 @@ node_types:
     tags:
       icon: /images/network.png
     requirements:
-      host:
-        type: tosca.nodes.WebServer
-        relationship_type: tosca.relationships.HostedOn
+      - host: tosca.nodes.WebServer
+        type: tosca.relationships.HostedOn
 
   tosca.nodes.DBMS:
     abstract: true
@@ -219,24 +222,21 @@ node_types:
     properties:
       db_user:
         type: string
-        required: true
         description: The special user account used for database administration.
       db_password:
         type: string
-        required: true
         description: The password associated with the user account provided in the ‘db_user’ property.
+      db_port:
+        type: integer
+        description: The port on which the underlying database service will listen to data.
       db_name:
         type: string
-        required: true
         description: The logical name of the database.
     requirements:
-      host:
-        type: tosca.nodes.DBMS
-        relationship_type: tosca.relationships.HostedOn
-    artifacts:
-      init_script:
-        artifact_type: tosca.artifacts.File
-        artifact_ref:
+      - host: tosca.nodes.DBMS
+        relationship: tosca.relationships.HostedOn
+    capabilities:
+      database_endpoint: tosca.capabilities.DatabaseEndpoint
 
 capability_types:
   tosca.capabilities.Root:
@@ -244,42 +244,66 @@ capability_types:
   tosca.capabilities.Container:
     derived_from: tosca.capabilities.Root
     properties:
-      containee_types:
+      valid_node_types:
         type: string
         required: true
     description: >
-      The Container capability, when included on a Node Type or Template definition,
-      indicates that the node can act as a container for (or a host for) one or more other declared Node Types.
+      A list of one or more names of Node Types that are supported as  containees that declare the Container type as a Capability.
   tosca.capabilities.Endpoint:
     derived_from: tosca.capabilities.Root
     properties:
       protocol:
         type: string
-        default: http
+        default: tcp
       port:
         type: integer
         constraints:
-          - greater_or_equal: 1
-          - less_or_equal: 65535
+         - greater_or_equal: 1
+         - less_or_equal: 65535
       secure:
         type: boolean
         default: false
+      url_path:
+        type: string
+        required: false
+      attributes:
+        ip_address:
+          type: string
   tosca.capabilities.DatabaseEndpoint:
     derived_from: tosca.capabilities.Endpoint
     description: This is the default TOSCA type that should be used or extended to define a specialized database endpoint capability.
   tosca.capabilities.Attachment:
     derived_from: tosca.capabilities.Root
     description: This is the default TOSCA type that should be used or extended to define a network endpoint capability.
+  tosca.capabilities.Scalable:
+    derived_from: tosca.capabilities.Root
+    properties:
+      min_intances:
+        type: integer
+        default: 1
+      max_intances:
+        type: integer
+        default: 1
+      default_instances:
+        type: integer
+        default: 1
+  tosca.capabilities.Connectivity:
+    derived_from: tosca.capabilities.Root
 
 relationship_types:
   tosca.relationships.Root:
     abstract: true
     description: This is the default (root) TOSCA Relationship Type definition that all other TOSCA Relationship Types derive from.
-    valid_targets: []
+    valid_targets: [ tosca.capabilities.Root ]
+    attributes:
+      tosca_id:
+        type: string
+      tosca_name:
+        type: string
     interfaces:
       tosca.interfaces.relationship.Configure:
         description: >
-          Default lifecycle for nodes in TOSCA.
+          The lifecycle interfaces define the essential, normative operations that each TOSCA Relationship Types may support.
         operations:
           pre_configure_source:
             description: Operation to pre-configure the source endpoint.
@@ -290,14 +314,21 @@ relationship_types:
           post_configure_target:
             description: Operation to post-configure the target endpoint.
           add_target:
-            description: Operation to add a target node.
+            description: Operation to notify the source node of a target node being added via a relationship.
+          add_source:
+            description: Operation to notify the target node of a source node which is now  available via a relationship.
           remove_target:
-            description: Operation to remove a target node.
+            description: Operation to notify the source node of a target node being removed from a relationship.
+          remove_source:
+            description: Operation to notify the target node of a source node being removed from a relationship.
+          target_changed:
+            description: Operation to notify source some property or attribute of the target.
+          source_changed:
+            description: Operation to notify target some property or attribute of the source.
   tosca.relationships.DependsOn:
     derived_from: tosca.relationships.Root
     description: >
       A generic depends on relationship.
-    valid_targets: [ tosca.capabilities.Root ]
   tosca.relationships.HostedOn:
     derived_from: tosca.relationships.DependsOn
     description: Relationship to use to describe that the source is hosted (installed/ deployed) on the target node.
