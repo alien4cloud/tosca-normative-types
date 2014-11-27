@@ -96,6 +96,11 @@ node_types:
         description: >
           The primary IP address assigned by the cloud provider that applications may use to access the Compute node.
           Note: This is used by the platform provider to convey the primary address used to access the compute node.  Future working drafts will address implementations that support floating or multiple IP addresses.
+    requirements:
+      network:
+        type: tosca.capabilities.Connectivity
+        lower_bound: 0
+        upper_bound: unbounded
     capabilities:
       host:
         type: tosca.capabilities.Container
@@ -238,6 +243,35 @@ node_types:
     capabilities:
       database_endpoint: tosca.capabilities.DatabaseEndpoint
 
+  tosca.nodes.Network:
+    derived_from: tosca.nodes.Root
+    description: >
+      The TOSCA Network node represents a simple, logical network service.
+    properties:
+      ip_version:
+        type: integer
+        required: false
+        default: 4
+        constraints:
+          - valid_values: [ 4, 6 ]
+      cidr:
+        type: string
+        required: false
+      gateway_ip:
+        type: string
+        required: false
+      network_name:
+        type: string
+        required: false
+      network_id:
+        type: string
+        required: false
+    capabilities:
+      connection:
+        type: tosca.capabilities.Connectivity
+    tags:
+      icon: /images/network.png
+
 capability_types:
   tosca.capabilities.Root:
     description: This is the default (root) TOSCA Capability Type definition that all other TOSCA Capability Types derive from.
@@ -344,6 +378,10 @@ relationship_types:
       device:
         type: string
         required: false
+  tosca.relationships.Network:
+    derived_from: tosca.relationships.Root
+    valid_sources: [ tosca.capabilities.Connectivity ]
+    valid_targets: [ tosca.capabilities.Connectivity ]
 
 artifact_types:
   tosca.artifacts.Root:
