@@ -239,7 +239,7 @@ node_types:
         description: The logical name of the database.
     requirements:
       - host: tosca.nodes.DBMS
-        relationship: tosca.relationships.HostedOn
+        relationship_type: tosca.relationships.HostedOn
     capabilities:
       database_endpoint: tosca.capabilities.DatabaseEndpoint
 
@@ -335,27 +335,26 @@ relationship_types:
       tosca.interfaces.relationship.Configure:
         description: >
           The lifecycle interfaces define the essential, normative operations that each TOSCA Relationship Types may support.
-        operations:
-          pre_configure_source:
-            description: Operation to pre-configure the source endpoint.
-          pre_configure_target:
-            description: Operation to pre-configure the target endpoint.
-          post_configure_source:
-            description: Operation to post-configure the source endpoint.
-          post_configure_target:
-            description: Operation to post-configure the target endpoint.
-          add_target:
-            description: Operation to notify the source node of a target node being added via a relationship.
-          add_source:
-            description: Operation to notify the target node of a source node which is now  available via a relationship.
-          remove_target:
-            description: Operation to notify the source node of a target node being removed from a relationship.
-          remove_source:
-            description: Operation to notify the target node of a source node being removed from a relationship.
-          target_changed:
-            description: Operation to notify source some property or attribute of the target.
-          source_changed:
-            description: Operation to notify target some property or attribute of the source.
+        pre_configure_source:
+          description: Operation to pre-configure the source endpoint.
+        pre_configure_target:
+          description: Operation to pre-configure the target endpoint.
+        post_configure_source:
+          description: Operation to post-configure the source endpoint.
+        post_configure_target:
+          description: Operation to post-configure the target endpoint.
+        add_target:
+          description: Operation to notify the source node of a target node being added via a relationship.
+        add_source:
+          description: Operation to notify the target node of a source node which is now  available via a relationship.
+        remove_target:
+          description: Operation to notify the source node of a target node being removed from a relationship.
+        remove_source:
+          description: Operation to notify the target node of a source node being removed from a relationship.
+        target_changed:
+          description: Operation to notify source some property or attribute of the target.
+        source_changed:
+          description: Operation to notify target some property or attribute of the source.
   tosca.relationships.DependsOn:
     derived_from: tosca.relationships.Root
     description: >
@@ -391,3 +390,4 @@ artifact_types:
     description: This artifact type is used when an artifact definition needs to have its associated file simply treated as a file and no special handling/handlers are invoked.
   tosca.artifacts.ShellScript:
     description: A shell script (.sh file)
+    file_ext: [ sh ]
