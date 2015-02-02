@@ -59,36 +59,39 @@ node_types:
     properties:
       num_cpus:
         type: integer
+        required: false
         constraints:
           -  greater_than: 0
         description: Number of (actual or virtual) CPUs associated with the Compute node.
       mem_size:
         type: integer
+        required: false
         constraints:
           - greater_than: 0
         description: Size of memory, in Megabytes (MB), available to applications running on the Compute node.
       disk_size:
         type: integer
+        required: false
         constraints:
           - greater_than: 0
         description: Size of the local disk, in Gigabytes (GB), available to applications running on the Compute node.
       os_arch:
         type: string
-        required: true
         constraints:
           - valid_values: ["x86_32", "x86_64"]
         description: The host Operating System (OS) architecture.
       os_type:
         type: string
-        required: true
         constraints:
           - valid_values: ["linux", "aix", "mac os", "windows"]
         description: The host Operating System (OS) type.
       os_distribution:
         type: string
+        required: false
         description: The host Operating System (OS) distribution.
       os_version:
         type: string
+        required: false
         description: The host Operating System version.
     attributes:
       ip_address:
@@ -119,18 +122,22 @@ node_types:
     properties:
       size:
         type: integer
+        required: false
         constraints:
           - greater_than: 0
         description: The requested storage size in MegaBytes (MB).
       volume_id:
         type: string
+        required: false
         description: ID of an existing volume (that is in the accessible scope of the requesting application).
       snapshot_id:
         type: string
+        required: false
         description: Some identifier that represents an existing snapshot that should be used when creating the block storage (volume).
     attributes:
       volume_id:
         type: string
+        required: false
         description: ID provided by the orchestrator for newly created volumes.
     requirements:
       attachment:
@@ -147,15 +154,16 @@ node_types:
     properties:
       store_name:
         type: string
-        required: true
         description: The logical name of the object store (or container).
       store_size:
         type: integer
+        required: false
         constraints:
           - greater_or_equal: 0
         description: The requested initial storage size in Gigabytes.
       store_maxsize:
         type: integer
+        required: false
         constraints:
           - greater_than: 0
         description: The requested maximum storage size in Gigabytes.
@@ -205,9 +213,11 @@ node_types:
     properties:
       dbms_root_password:
         type: string
+        required: false
         description: the root password for the DBMS service.
       dbms_port:
         type: integer
+        required: false
         description: the port the DBMS service will listen to for data and requests
     capabilities:
       host:
@@ -227,15 +237,19 @@ node_types:
     properties:
       db_user:
         type: string
+        required: false
         description: The special user account used for database administration.
       db_password:
         type: string
+        required: false
         description: The password associated with the user account provided in the ‘db_user’ property.
       db_port:
         type: integer
+        required: false
         description: The port on which the underlying database service will listen to data.
       db_name:
         type: string
+        required: false
         description: The logical name of the database.
     requirements:
       - host: tosca.nodes.DBMS
@@ -291,6 +305,7 @@ capability_types:
         default: tcp
       port:
         type: integer
+        required: false
         constraints:
          - greater_or_equal: 1
          - less_or_equal: 65535
