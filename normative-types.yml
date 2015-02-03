@@ -137,7 +137,6 @@ node_types:
     attributes:
       volume_id:
         type: string
-        required: false
         description: ID provided by the orchestrator for newly created volumes.
     requirements:
       attachment:
