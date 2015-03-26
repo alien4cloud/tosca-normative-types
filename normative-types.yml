@@ -105,10 +105,7 @@ node_types:
         lower_bound: 0
         upper_bound: unbounded
     capabilities:
-      host:
-        type: tosca.capabilities.Container
-        properties:
-          valid_node_types: [tosca.nodes.SoftwareComponent]
+      host: tosca.capabilities.Container
       attach: tosca.capabilities.Attachment
       scalable: tosca.capabilities.Scalable
 
@@ -187,10 +184,7 @@ node_types:
     capabilities:
       app_endpoint: tosca.capabilities.Endpoint
       secure_endpoint: tosca.capabilities.Endpoint
-      host:
-        type: tosca.capabilities.Container
-        properties:
-          valid_node_types: [ tosca.nodes.WebApplication ]
+      host: tosca.capabilities.Container
 
   tosca.nodes.WebApplication:
     derived_from: tosca.nodes.Root
@@ -219,12 +213,8 @@ node_types:
         required: false
         description: the port the DBMS service will listen to for data and requests
     capabilities:
-      host:
-        type: tosca.capabilities.Container
-        properties:
-          valid_node_types: [tosca.nodes.Database]
-      endpoint:
-        type: tosca.capabilities.DatabaseEndpoint
+      host: tosca.capabilities.Container
+      endpoint: tosca.capabilities.DatabaseEndpoint
 
   tosca.nodes.Database:
     derived_from: tosca.nodes.Root
@@ -293,7 +283,7 @@ capability_types:
     properties:
       valid_node_types:
         type: string
-        required: true
+        required: false
     description: >
       A list of one or more names of Node Types that are supported as  containees that declare the Container type as a Capability.
   tosca.capabilities.Endpoint:
