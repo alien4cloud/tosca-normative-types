@@ -373,14 +373,6 @@ relationship_types:
   tosca.relationships.AttachTo:
     derived_from: tosca.relationships.Root
     valid_targets: [ tosca.capabilities.Attachment ]
-    properties:
-      location:
-        type: string
-        constraints:
-          - min_length: 1
-      device:
-        type: string
-        required: false
   tosca.relationships.Network:
     derived_from: tosca.relationships.Root
     valid_sources: [ tosca.capabilities.Connectivity ]
