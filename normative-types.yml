@@ -107,6 +107,7 @@ node_types:
     capabilities:
       host: tosca.capabilities.Container
       attach: tosca.capabilities.Attachment
+      scalable: tosca.capabilities.Scalable
 
   tosca.nodes.BlockStorage:
     derived_from: tosca.nodes.Root
