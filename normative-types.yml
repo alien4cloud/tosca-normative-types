@@ -313,10 +313,10 @@ capability_types:
   tosca.capabilities.Scalable:
     derived_from: tosca.capabilities.Root
     properties:
-      min_intances:
+      min_instances:
         type: integer
         default: 1
-      max_intances:
+      max_instances:
         type: integer
         default: 1
       default_instances:
