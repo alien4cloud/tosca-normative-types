@@ -99,6 +99,10 @@ node_types:
         description: >
           The primary IP address assigned by the cloud provider that applications may use to access the Compute node.
           Note: This is used by the platform provider to convey the primary address used to access the compute node.  Future working drafts will address implementations that support floating or multiple IP addresses.
+      public_ip_address:
+        type: string
+        description: >
+          The attached floating IP. Put here as this attribute is really used. When public_ip_address will be properly implemented, this attribute will be removed.
     requirements:
       network:
         type: tosca.capabilities.Connectivity
