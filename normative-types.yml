@@ -1,4 +1,4 @@
-tosca_definitions_version: alien_dsl_1_1_0
+tosca_definitions_version: tosca_simple_yaml_1_0_0_wd06
 
 template_name: alien-normative-types
 template_author: TOSCA TC
@@ -442,8 +442,6 @@ node_types:
       This is the default (root) TOSCA Node Type that all other TOSCA nodes should extends.
       This allows all TOSCA nodes to have a consistent set of features for modeling and management
       (e.g, consistent definitions for requirements, capabilities, and lifecycle interfaces).
-    tags:
-      icon: /images/root.png
     attributes:
       tosca_id:
         type: string
@@ -475,8 +473,6 @@ node_types:
     description: >
       The TOSCA Compute node represents one or more real or virtual processors of software applications or services along with other essential local resources.
       Collectively, the resources the compute node represents can logically be viewed as a (real or virtual) “server”.
-    tags:
-      icon: /images/compute.png
     attributes:
       private_address:
         type: string
@@ -628,8 +624,6 @@ node_types:
     description: >
       The TOSCA BlockStorage node currently represents a server-local block storage device (i.e., not shared)
       offering evenly sized blocks of data from which raw storage volumes can be created.
-    tags:
-      icon: /images/volume.png
     properties:
       size:
         type: scalar-unit.size
