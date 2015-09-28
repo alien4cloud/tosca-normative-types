@@ -329,6 +329,7 @@ capability_types:
           An optional property that indicates the requested default number of instances that should be the starting number of instances a TOSCA orchestrator
           should attempt to allocate.
           Note: The value for this property MUST be in the range between the values set for ‘min_instances’ and ‘max_instances’ properties.
+        default: 1
   tosca.capabilities.network.Bindable:
     derived_from: tosca.capabilities.Node
     description: A node type that includes the Bindable capability indicates that it can be bound to a logical network association via a network port.
