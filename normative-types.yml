@@ -453,10 +453,6 @@ node_types:
         type: version
         description: The optional software component’s version.
         required: false
-      admin_credential:
-        type: tosca.datatypes.Credential
-        description: The optional credential that can be used to authenticate to the software component.
-        required: false
     requirements:
       - host: tosca.capabilities.Container
         relationship: tosca.relationships.HostedOn
@@ -559,6 +555,13 @@ node_types:
       snapshot_id:
         type: string
         description: Some identifier that represents an existing snapshot that should be used when creating the block storage (volume).
+        required: false
+      device:
+        type: string
+        description: >
+          The logical device name which for the attached device (which is represented by the target node in the model).
+          e.g., ‘/dev/hda1’
+          Note: this property will be moved in next releases to the AttachTo relationship as it is specified by TOSCA spec.
         required: false
     requirements:
       attachment:
