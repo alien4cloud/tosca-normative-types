@@ -363,10 +363,8 @@ node_types:
     requirements:
       - dependency: tosca.capabilities.Node
         relationship: tosca.relationships.DependsOn
-        lower_bound: 0
-        upper_bound: UNBOUNDED
+        occurrences: [ 0, UNBOUNDED ]
         # node: tosca.nodes.Root
-        # occurrences: [ 0, UNBOUNDED ]
     interfaces:
       tosca.interfaces.node.lifecycle.Standard:
         description: >
@@ -399,8 +397,7 @@ node_types:
     requirements:
       network:
         type: tosca.capabilities.Connectivity
-        lower_bound: 0
-        upper_bound: unbounded
+        occurrences: [ 0, UNBOUNDED ]
     capabilities:
       attach: tosca.capabilities.Attachment
       host:
@@ -598,13 +595,12 @@ node_types:
     capabilities:
       client:
         type: tosca.capabilities.Endpoint.Public
-        upper_bound: UNBOUNDED
+        occurrences: [ 0, UNBOUNDED ]
         description: the Floating (IP) client’s on the public network can connect to
     requirements:
       - application: tosca.capabilities.Endpoint
         relationship: tosca.relationships.RoutesTo
-        lower_bound: 0
-        upper_bound: UNBOUNDED
+        occurrences: [ 0, UNBOUNDED ]
         description: Connection to one or more load balanced applications
 
 group_types:
