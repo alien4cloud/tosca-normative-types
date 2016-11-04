@@ -395,8 +395,7 @@ node_types:
         type: string
         description: The primary public IP address assigned by the cloud provider that applications may use to access the Compute node.
     requirements:
-      network:
-        type: tosca.capabilities.Connectivity
+      - network: tosca.capabilities.Connectivity
         occurrences: [ 0, UNBOUNDED ]
     capabilities:
       attach: tosca.capabilities.Attachment
@@ -561,8 +560,7 @@ node_types:
           Note: this property will be moved in next releases to the AttachTo relationship as it is specified by TOSCA spec.
         required: false
     requirements:
-      attachment:
-        type: tosca.capabilities.Attachment
+      - attachment: tosca.capabilities.Attachment
   tosca.nodes.Container.Runtime:
     derived_from: tosca.nodes.SoftwareComponent
     description: >
