@@ -62,10 +62,10 @@ data_types:
   #       type: list
   #       entry_schema:
   #         type: string
-  tosca.datatypes.network.PortDef:
-    derived_from: integer
-    constraints:
-      - in_range: [ 1, 65535 ]
+  # tosca.datatypes.network.PortDef:
+  #   derived_from: integer
+  #   constraints:
+  #     - in_range: [ 1, 65535 ]
   # tosca.datatypes.network.PortSpec:
   #   derived_from: tosca.datatypes.Root
   #   properties:
@@ -176,9 +176,11 @@ capability_types:
           Examples: http, https, ftp, tcp, udp, etc.
         default: tcp
       port:
-        type: tosca.datatypes.network.PortDef
+        type: integer
         description: The optional port of the endpoint.
         required: false
+        constraints:
+          - in_range: [ 1, 65535 ]
       secure:
         type: boolean
         description: Requests for the endpoint to be secure and use credentials supplied on the ConnectsTo relationship.
