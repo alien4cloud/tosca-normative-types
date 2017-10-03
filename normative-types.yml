@@ -745,16 +745,36 @@ group_types:
 
 policy_types:
   tosca.policies.Root:
+    abstract: true
     description: The TOSCA Policy Type all other TOSCA Policy Types derive from
+    metadata:
+      icon: /images/policy_root.png
+      a4c_class: fa fa-gavel
   tosca.policies.Placement:
+    abstract: true
     derived_from: tosca.policies.Root
     description: The TOSCA Policy Type definition that is used to govern placement of TOSCA nodes or groups of nodes.
+    metadata:
+      icon: /images/policy_placement.png
+      a4c_class: fa fa-gavel
   tosca.policies.Scaling:
+    abstract: true
     derived_from: tosca.policies.Root
     description: The TOSCA Policy Type definition that is used to govern scaling of TOSCA nodes or groups of nodes.
+    metadata:
+      icon: /images/policy_scaling.png
+      a4c_class: fa-gavel
   tosca.policies.Update:
+    abstract: true
     derived_from: tosca.policies.Root
     description: The TOSCA Policy Type definition that is used to govern update of TOSCA nodes or groups of nodes.
+    metadata:
+      icon: /images/policy_update.png
+      a4c_class: fa-gavel
   tosca.policies.Performance:
+    abstract: true
     derived_from: tosca.policies.Root
     description: The TOSCA Policy Type definition that is used to declare performance requirements for TOSCA nodes or groups of nodes.
+    metadata:
+      icon: /images/policy_performance.png
+      a4c_class: fa-gauge
