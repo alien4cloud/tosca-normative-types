@@ -763,7 +763,7 @@ policy_types:
     description: The TOSCA Policy Type definition that is used to govern scaling of TOSCA nodes or groups of nodes.
     metadata:
       icon: /images/policy_scaling.png
-      a4c_class: fa fa-share fa-flip-h-rotate-90
+      a4c_class: fa fa-reply fa-rotate-90
   tosca.policies.Update:
     abstract: true
     derived_from: tosca.policies.Root
