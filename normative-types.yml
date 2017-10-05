@@ -750,6 +750,7 @@ policy_types:
     metadata:
       icon: /images/policy_root.png
       a4c_class: fa fa-gavel
+      a4c_svg_char: f0e3
   tosca.policies.Placement:
     abstract: true
     derived_from: tosca.policies.Root
@@ -757,6 +758,7 @@ policy_types:
     metadata:
       icon: /images/policy_placement.png
       a4c_class: fa fa-map-marker
+      a4c_svg_char: f041
   tosca.policies.Scaling:
     abstract: true
     derived_from: tosca.policies.Root
@@ -764,6 +766,8 @@ policy_types:
     metadata:
       icon: /images/policy_scaling.png
       a4c_class: fa fa-reply fa-rotate-90
+      a4c_svg_char: f112
+      a4c_svg_rotate: 90
   tosca.policies.Update:
     abstract: true
     derived_from: tosca.policies.Root
@@ -771,6 +775,7 @@ policy_types:
     metadata:
       icon: /images/policy_update.png
       a4c_class: fa fa-refresh
+      a4c_svg_char: f021
   tosca.policies.Performance:
     abstract: true
     derived_from: tosca.policies.Root
@@ -778,3 +783,4 @@ policy_types:
     metadata:
       icon: /images/policy_performance.png
       a4c_class: fa fa-tachometer
+      a4c_svg_char: f0e4
